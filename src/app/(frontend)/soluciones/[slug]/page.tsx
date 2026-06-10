@@ -5,18 +5,17 @@ import { Footer } from '@/components/layout/Footer'
 import { ContactCta } from '@/components/home/ContactCta'
 import { SolutionHero } from '@/components/solutions/SolutionHero'
 import { SolutionFeatureSection } from '@/components/solutions/SolutionFeatureSection'
-import { solutionDetails } from '@/content/solutions'
-import { getHomeContent, getSiteSettings } from '@/lib/data'
+import { getHomeContent, getSiteSettings, getSolutionDetail } from '@/lib/data'
 import { siteUrl } from '@/lib/siteConfig'
 
-// Render on each request so the CMS-driven footer + contact CTA stay current.
+// Render on each request so CMS edits (detail content, footer, CTA) show up.
 export const dynamic = 'force-dynamic'
 
 type Params = { params: Promise<{ slug: string }> }
 
 export async function generateMetadata({ params }: Params): Promise<Metadata> {
   const { slug } = await params
-  const detail = solutionDetails[slug]
+  const detail = await getSolutionDetail(slug, 'es')
   if (!detail) return {}
   const url = `${siteUrl}/soluciones/${slug}`
   return {
@@ -34,10 +33,12 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
 
 export default async function SolutionPage({ params }: Params) {
   const { slug } = await params
-  const detail = solutionDetails[slug]
+  const [detail, home, site] = await Promise.all([
+    getSolutionDetail(slug, 'es'),
+    getHomeContent('es'),
+    getSiteSettings('es'),
+  ])
   if (!detail) notFound()
-
-  const [home, site] = await Promise.all([getHomeContent('es'), getSiteSettings('es')])
 
   return (
     <>

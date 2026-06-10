@@ -181,10 +181,68 @@ export interface Media {
  */
 export interface Solution {
   id: number;
+  /**
+   * Nombre corto del área (tarjeta de inicio + eyebrow de la página).
+   */
   title: string;
+  /**
+   * URL: /soluciones/<slug>. Ej: transporte-y-logistica
+   */
   slug: string;
   area: 'transport-logistics' | 'defense-security' | 'emergency-management' | 'urban-services';
+  /**
+   * Descripción breve para la tarjeta de la página de inicio.
+   */
   excerpt?: string | null;
+  /**
+   * Orden de aparición (menor = primero).
+   */
+  order?: number | null;
+  /**
+   * Titular grande del hero. Ej: «Sistemas y soluciones para transporte, logística y movilidad».
+   */
+  heroHeadline?: string | null;
+  /**
+   * Texto introductorio bajo el titular.
+   */
+  heroSubtitle?: string | null;
+  /**
+   * Foto de fondo del hero (se aplica un degradado rojo encima).
+   */
+  heroImage?: (number | null) | Media;
+  /**
+   * PDF descargable (botón «Descargar PDF»). Opcional.
+   */
+  pdf?: (number | null) | Media;
+  /**
+   * Bloques de contenido. Se alternan foto/texto automáticamente (izq./der.) según el orden.
+   */
+  sections?:
+    | {
+        title: string;
+        body?: string | null;
+        /**
+         * Capacidades (lista con check rojo).
+         */
+        features?:
+          | {
+              text?: string | null;
+              id?: string | null;
+            }[]
+          | null;
+        /**
+         * Lista bajo el rótulo «Ventajas».
+         */
+        advantages?:
+          | {
+              text?: string | null;
+              id?: string | null;
+            }[]
+          | null;
+        image?: (number | null) | Media;
+        id?: string | null;
+      }[]
+    | null;
   body?: {
     root: {
       type: string;
@@ -200,14 +258,12 @@ export interface Solution {
     };
     [k: string]: unknown;
   } | null;
-  heroImage?: (number | null) | Media;
   gallery?:
     | {
         image?: (number | null) | Media;
         id?: string | null;
       }[]
     | null;
-  order?: number | null;
   meta?: {
     title?: string | null;
     description?: string | null;
@@ -458,15 +514,38 @@ export interface SolutionsSelect<T extends boolean = true> {
   slug?: T;
   area?: T;
   excerpt?: T;
-  body?: T;
+  order?: T;
+  heroHeadline?: T;
+  heroSubtitle?: T;
   heroImage?: T;
+  pdf?: T;
+  sections?:
+    | T
+    | {
+        title?: T;
+        body?: T;
+        features?:
+          | T
+          | {
+              text?: T;
+              id?: T;
+            };
+        advantages?:
+          | T
+          | {
+              text?: T;
+              id?: T;
+            };
+        image?: T;
+        id?: T;
+      };
+  body?: T;
   gallery?:
     | T
     | {
         image?: T;
         id?: T;
       };
-  order?: T;
   meta?:
     | T
     | {

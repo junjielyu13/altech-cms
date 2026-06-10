@@ -55,6 +55,16 @@ const run = async () => {
   }
 
   // 5. Solutions (es + en; ca falls back to es) --------------------------------
+  // Upload the Transporte y logística detail-page imagery (hero + 3 sections).
+  const uploadImg = async (file: string, alt: string) =>
+    (await payload.create({ collection: 'media', filePath: asset(file), data: { alt } })).id
+  const tHero = await uploadImg('sol-hero-transporte.png', 'Transporte y logística')
+  const tImg1 = await uploadImg('sol-transporte-1.png', 'Camión equipado con sistemas embarcados Altech')
+  const tImg2 = await uploadImg('sol-transporte-2.png', 'Flota de vehículos gestionada desde el Centro de Control')
+  const tImg3 = await uploadImg('sol-transporte-3.png', 'Buque de carga integrado en la cadena de suministro')
+
+  const list = (...items: string[]) => items.map((text) => ({ text }))
+
   const solutions = [
     {
       slug: 'transporte-y-logistica',
@@ -63,6 +73,60 @@ const run = async () => {
       es: {
         title: 'Transporte y logística',
         excerpt: 'Sistemas de telemática y gestión de flotas para operadores de transporte',
+        heroHeadline: 'Sistemas y soluciones para transporte, logística y movilidad',
+        heroSubtitle:
+          'Altech diseña, fabrica e integra hardware y software a medida para los tres grandes verticales del sector: transporte público de viajeros, logística de mercancías e infraestructura viaria.',
+        heroImage: tHero,
+        sections: [
+          {
+            title: 'Sistemas embarcados de localización y telemetría',
+            body: 'Amplio abanico de equipos multifabricante que cubre cualquier flota — desde localización y sensorización básica hasta sistemas complejos de comunicaciones e informática embarcada que dotan al vehículo de capacidades diferenciales.',
+            features: list(
+              'Posicionamiento y sensorización de alta precisión',
+              'Multicomunicaciones GPRS, 3G/LTE, NB-IoT, Tetra, Tetrapol y satélite',
+              'ECO-Drive, navegación asistida y análisis de estilos de conducción',
+              'Gestión de vídeo embarcado y sistemas LPR',
+            ),
+            advantages: list(
+              'Mayor control de la actividad diaria',
+              'Monitorización del mantenimiento de la flota',
+              'Mayor seguridad en el transporte',
+            ),
+            image: tImg1,
+          },
+          {
+            title: 'Soluciones para la gestión y control de flotas',
+            body: 'Plataforma tecnológica propia para implementar Centros de Control a medida. Arquitectura modular con análisis en tiempo real y diferido de toda la información operativa del sistema.',
+            features: list(
+              'Geolocalización y monitorización de vehículos en tiempo real',
+              'Gestión dinámica de rutas, servicios y estados operativos',
+              'Gestión de fotografías y vídeo embarcado',
+              'Cuadros de mando, gráficos dinámicos e informes a medida',
+            ),
+            advantages: list(
+              'Optimización de rutas y de recursos',
+              'Información disponible en tiempo real',
+              'Obtención de métricas e indicadores',
+            ),
+            image: tImg2,
+          },
+          {
+            title: 'Soluciones altamente integrables',
+            body: 'Gran capacidad de integración con equipos embarcados de múltiples tecnologías. APIs e interfaces que permiten coexistir con plataformas corporativas, organismos públicos y cualquier actor de la cadena de suministro.',
+            features: list(
+              'Compatible con trackers, GPS, tacógrafos digitales, termógrafos y sensores',
+              'APIs e interfaces hacia plataformas corporativas y organismos públicos',
+              'Despliegues en la nube o sobre infraestructura propia',
+              'Solución modular totalmente personalizable a cada entorno',
+            ),
+            advantages: list(
+              'Sistema embarcado adaptado a cada entorno',
+              'Solución modular totalmente personalizable',
+              'Soluciones flexibles y configurables',
+            ),
+            image: tImg3,
+          },
+        ],
       },
       en: { title: 'Transport & Logistics', excerpt: 'Telematics and fleet management systems for transport operators' },
     },
@@ -104,7 +168,7 @@ const run = async () => {
     const doc = await payload.create({
       collection: 'solutions',
       locale: 'es',
-      data: { slug: s.slug, area: s.area, order: s.order, title: s.es.title, excerpt: s.es.excerpt },
+      data: { slug: s.slug, area: s.area, order: s.order, ...s.es } as any,
     })
     await payload.update({
       collection: 'solutions',

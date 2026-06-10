@@ -2,6 +2,7 @@ import { getPayload } from 'payload'
 import config from '@payload-config'
 import * as fallback from '@/content/home'
 import * as siteFallback from '@/content/site'
+import { solutionDetails, type SolutionDetail } from '@/content/solutions'
 import type {
   ClientLogo,
   NewsCardContent,
@@ -115,6 +116,63 @@ export async function getSolutions(locale: Locale): Promise<SolutionCardContent[
     }))
   } catch {
     return fallback.solutions
+  }
+}
+
+/**
+ * Full detail page for one solution. Reads the CMS `solutions` doc (hero +
+ * repeatable sections) and maps it to the presentation shape; falls back to the
+ * static `solutionDetails` entry, and returns null when neither exists (→ 404).
+ */
+export async function getSolutionDetail(
+  slug: string,
+  locale: Locale,
+): Promise<SolutionDetail | null> {
+  const staticDetail = solutionDetails[slug] ?? null
+  try {
+    const p = await payload()
+    const res = await p.find({
+      collection: 'solutions',
+      locale,
+      fallbackLocale: 'es',
+      where: { slug: { equals: slug } },
+      limit: 1,
+      depth: 1,
+    })
+    const doc = res.docs[0] as any
+    if (!doc) return staticDetail
+
+    const sections = (doc.sections as any[] | undefined)
+      ?.map((s, i) => ({
+        title: (s?.title as string) || '',
+        body: (s?.body as string) || '',
+        features: ((s?.features as Array<{ text?: string }>) || [])
+          .map((f) => f?.text || '')
+          .filter(Boolean),
+        advantages: ((s?.advantages as Array<{ text?: string }>) || [])
+          .map((a) => a?.text || '')
+          .filter(Boolean),
+        image: mediaUrl(s?.image) || staticDetail?.sections[i]?.image || '/figma/sol-transporte-1.png',
+        imageAlt: (s?.title as string) || '',
+        imageSide: (i % 2 === 0 ? 'left' : 'right') as 'left' | 'right',
+      }))
+      .filter((s) => s.title)
+
+    // If the CMS doc has no detail content yet, prefer the static page.
+    if (!doc.heroHeadline && !sections?.length) return staticDetail
+
+    return {
+      slug,
+      area: doc.area as SolutionArea,
+      eyebrow: doc.title || staticDetail?.eyebrow || '',
+      title: doc.heroHeadline || staticDetail?.title || doc.title || '',
+      subtitle: doc.heroSubtitle || staticDetail?.subtitle || doc.excerpt || '',
+      heroImage: mediaUrl(doc.heroImage) || staticDetail?.heroImage || '/figma/sol-hero-transporte.png',
+      pdfHref: mediaUrl(doc.pdf) || staticDetail?.pdfHref,
+      sections: sections?.length ? sections : staticDetail?.sections ?? [],
+    }
+  } catch {
+    return staticDetail
   }
 }
 
