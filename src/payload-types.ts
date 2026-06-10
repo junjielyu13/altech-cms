@@ -577,11 +577,32 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
  */
 export interface Home {
   id: number;
-  heroHeadline?: string | null;
-  heroSubtitle?: string | null;
-  heroMedia?: (number | null) | Media;
-  ctaLabel?: string | null;
-  ctaLink?: string | null;
+  hero?: {
+    /**
+     * Cada salto de línea es una línea del titular.
+     */
+    headline?: string | null;
+    subtitle?: string | null;
+    media?: (number | null) | Media;
+    stats?:
+      | {
+          value?: string | null;
+          label?: string | null;
+          id?: string | null;
+        }[]
+      | null;
+  };
+  solutionsSection?: {
+    eyebrow?: string | null;
+    title?: string | null;
+    subtitle?: string | null;
+  };
+  contactCta?: {
+    title?: string | null;
+    subtitle?: string | null;
+    buttonLabel?: string | null;
+    link?: string | null;
+  };
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -617,11 +638,35 @@ export interface SiteSetting {
  * via the `definition` "home_select".
  */
 export interface HomeSelect<T extends boolean = true> {
-  heroHeadline?: T;
-  heroSubtitle?: T;
-  heroMedia?: T;
-  ctaLabel?: T;
-  ctaLink?: T;
+  hero?:
+    | T
+    | {
+        headline?: T;
+        subtitle?: T;
+        media?: T;
+        stats?:
+          | T
+          | {
+              value?: T;
+              label?: T;
+              id?: T;
+            };
+      };
+  solutionsSection?:
+    | T
+    | {
+        eyebrow?: T;
+        title?: T;
+        subtitle?: T;
+      };
+  contactCta?:
+    | T
+    | {
+        title?: T;
+        subtitle?: T;
+        buttonLabel?: T;
+        link?: T;
+      };
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;

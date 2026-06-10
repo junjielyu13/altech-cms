@@ -2,9 +2,9 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { Container } from '@/components/ui/Container'
 import { ChevronRight } from '@/components/ui/icons'
-import { news, type NewsCardContent } from '@/content/home'
+import { type NewsCardContent } from '@/content/home'
 
-export function News() {
+export function News({ news }: { news: NewsCardContent[] }) {
   return (
     <section className="bg-surface pb-20 lg:pb-28">
       <Container>

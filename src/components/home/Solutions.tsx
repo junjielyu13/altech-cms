@@ -1,22 +1,27 @@
 import Link from 'next/link'
 import { Container } from '@/components/ui/Container'
 import { ChevronRight } from '@/components/ui/icons'
-import { solutions, solutionsIntro, type SolutionCardContent } from '@/content/home'
+import { type SolutionCardContent } from '@/content/home'
 import { cn } from '@/lib/cn'
 
-export function Solutions() {
+interface SolutionsProps {
+  intro: { eyebrow: string; title: string; subtitle: string }
+  solutions: SolutionCardContent[]
+}
+
+export function Solutions({ intro, solutions }: SolutionsProps) {
   return (
     <section className="bg-surface py-20 lg:py-28">
       <Container>
         <div className="flex flex-col items-center text-center">
           <span className="rounded-[48px] bg-chip px-6 py-3 text-[clamp(16px,1.3vw,20px)] font-medium text-body">
-            {solutionsIntro.eyebrow}
+            {intro.eyebrow}
           </span>
           <h2 className="mt-9 max-w-[1340px] text-[clamp(32px,5vw,64px)] font-extrabold leading-[1.02] text-ink">
-            {solutionsIntro.title}
+            {intro.title}
           </h2>
           <p className="mt-6 max-w-[699px] text-[clamp(18px,1.7vw,24px)] leading-snug text-body-soft">
-            {solutionsIntro.subtitle}
+            {intro.subtitle}
           </p>
         </div>
 

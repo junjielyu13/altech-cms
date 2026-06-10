@@ -1,8 +1,13 @@
 import Image from 'next/image'
 import { Container } from '@/components/ui/Container'
-import { hero, clients } from '@/content/home'
+import type { ClientLogo, StatContent } from '@/content/home'
 
-export function Hero() {
+interface HeroProps {
+  hero: { titleLines: string[]; subtitle: string; stats: StatContent[] }
+  clients: ClientLogo[]
+}
+
+export function Hero({ hero, clients }: HeroProps) {
   return (
     <section className="relative overflow-hidden">
       {/* Circuit-board backdrop + red gradient wash, fading into the page below */}

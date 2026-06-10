@@ -1,19 +1,17 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { Logo } from '@/components/ui/Logo'
-import {
-  certBadges,
-  contact,
-  copyright,
-  footerColumns,
-  legalLinks,
-  social,
-} from '@/content/site'
+import { certBadges, copyright, footerColumns, legalLinks } from '@/content/site'
 
 const linkClass = 'text-[clamp(16px,1.1vw,20px)] text-muted transition-colors hover:text-white'
 const headingClass = 'text-[clamp(18px,1.2vw,24px)] font-extrabold text-white'
 
-export function Footer() {
+interface FooterProps {
+  contact: { address: string; email: string; phone: string }
+  social: Array<{ label: string; href: string; icon: string }>
+}
+
+export function Footer({ contact, social }: FooterProps) {
   return (
     <footer className="bg-ink text-white">
       <div className="mx-auto max-w-[1680px] px-5 py-16 sm:px-8 lg:px-12 xl:px-[109px] lg:py-24">

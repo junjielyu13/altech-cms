@@ -2,9 +2,11 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { Container } from '@/components/ui/Container'
 import { ChevronRight } from '@/components/ui/icons'
-import { contactCta } from '@/content/home'
+interface ContactCtaProps {
+  cta: { title: string; subtitle: string; buttonLabel: string; href: string }
+}
 
-export function ContactCta() {
+export function ContactCta({ cta: contactCta }: ContactCtaProps) {
   return (
     <section className="bg-surface pb-20 lg:pb-28">
       <Container>
