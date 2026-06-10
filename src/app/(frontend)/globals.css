@@ -1,0 +1,41 @@
+@import 'tailwindcss';
+
+/* ----------------------------------------------------------------------------
+   Altech design tokens — extracted from the Figma "ALTECH - Home" board.
+   Codec Pro (headings) is a commercial typeface; until the licensed files are
+   provided we substitute a geometric sans (Poppins, loaded via next/font).
+---------------------------------------------------------------------------- */
+@theme {
+  --color-brand: #f11b1c;
+  --color-brand-dark: #d11617;
+  --color-ink: #131313;
+  --color-body: #626262;
+  --color-body-soft: #666666;
+  --color-muted: #979797;
+  --color-line: #d8d8d8;
+  --color-chip: #ececec;
+  --color-surface: #f9f9f9;
+  --color-card: #fafafa;
+
+  --font-heading: var(--font-codec), 'Poppins', system-ui, sans-serif;
+  --font-body: 'Helvetica Neue', 'Helvetica', Arial, system-ui, sans-serif;
+
+  --shadow-card: 0px 4px 7.5px rgba(0, 0, 0, 0.04);
+  --shadow-nav: 0px 4px 15px 9px rgba(0, 0, 0, 0.04);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--color-surface);
+  color: var(--color-ink);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+  font-weight: 800;
+}

@@ -1,0 +1,13 @@
+<svg preserveAspectRatio="none" width="100%" height="100%" overflow="visible" style="display: block;" viewBox="0 0 45 37" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Icono_Defensa y seguridad" clip-path="url(#clip0_0_93)">
+<path id="Vector" d="M7.75207 13.4351L28.9132 2.42233C32.5916 0.507957 37.1178 1.97304 39.0119 5.69557L42.8921 13.3214L15.0634 27.8042L7.75207 13.4351Z" stroke="var(--stroke-0, #F11B1C)" stroke-width="3" stroke-miterlimit="10"/>
+<path id="Vector_2" d="M28.9873 21.5105V35.2737L40.9231 35.4162" stroke="var(--stroke-0, #F11B1C)" stroke-width="3" stroke-miterlimit="10"/>
+<path id="Vector_3" d="M9.53193 16.3474L2.12459 20.035L6.48077 28.569L13.8229 24.3323" stroke="var(--stroke-0, #F11B1C)" stroke-width="3" stroke-miterlimit="10"/>
+<path id="Vector_4" d="M28.9873 26.7766C31.8631 26.7766 34.1944 24.4189 34.1944 21.5105C34.1944 18.6021 31.8631 16.2444 28.9873 16.2444C26.1115 16.2444 23.7802 18.6021 23.7802 21.5105C23.7802 24.4189 26.1115 26.7766 28.9873 26.7766Z" fill="var(--fill-0, white)" stroke="var(--stroke-0, #F11B1C)" stroke-width="3" stroke-miterlimit="10"/>
+</g>
+<defs>
+<clipPath id="clip0_0_93">
+<rect width="45" height="37" fill="white"/>
+</clipPath>
+</defs>
+</svg>

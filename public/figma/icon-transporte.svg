@@ -1,0 +1,13 @@
+<svg preserveAspectRatio="none" width="100%" height="100%" overflow="visible" style="display: block;" viewBox="0 0 47 37" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Icono_Transporte" clip-path="url(#clip0_0_100)">
+<path id="Vector" d="M18.0679 28.7523H26.3335C26.3335 28.7523 26.4149 26.52 27.9627 24.5968V1.6556H8.19493C8.19493 1.6556 1.62921 1.61697 1.62921 8.32769V28.7523H5.92761" stroke="var(--stroke-0, #F11B1C)" stroke-width="3" stroke-miterlimit="10"/>
+<path id="Vector_2" d="M12.0534 35.3444C15.3752 35.3444 18.0679 32.608 18.0679 29.2325C18.0679 25.8569 15.3752 23.1205 12.0534 23.1205C8.73172 23.1205 6.03894 25.8569 6.03894 29.2325C6.03894 32.608 8.73172 35.3444 12.0534 35.3444Z" stroke="var(--stroke-0, #F11B1C)" stroke-width="3" stroke-miterlimit="10"/>
+<path id="Vector_3" d="M32.7145 35.3444C36.0363 35.3444 38.729 32.608 38.729 29.2325C38.729 25.8569 36.0363 23.1205 32.7145 23.1205C29.3928 23.1205 26.7 25.8569 26.7 29.2325C26.7 32.608 29.3928 35.3444 32.7145 35.3444Z" stroke="var(--stroke-0, #F11B1C)" stroke-width="3" stroke-miterlimit="10"/>
+<path id="Vector_4" d="M38.729 28.7523H45.3708V18.3772C45.3708 18.3772 45.4495 9.59975 37.0401 9.59975H27.96V17.933H44.8739" stroke="var(--stroke-0, #F11B1C)" stroke-width="3" stroke-miterlimit="10"/>
+</g>
+<defs>
+<clipPath id="clip0_0_100">
+<rect width="47" height="37" fill="white"/>
+</clipPath>
+</defs>
+</svg>
