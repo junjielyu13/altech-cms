@@ -18,4 +18,4 @@ export const org = {
 }
 
 /** Public routes for the sitemap. Extend as pages are built. */
-export const sitemapRoutes = ['/']
+export const sitemapRoutes = ['/', '/soluciones/transporte-y-logistica']

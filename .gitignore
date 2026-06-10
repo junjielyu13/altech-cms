@@ -5,3 +5,6 @@ node_modules
 /dist
 .DS_Store
 .vercel
+
+# TypeScript incremental build cache
+tsconfig.tsbuildinfo
