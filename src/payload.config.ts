@@ -52,22 +52,22 @@ export default buildConfig({
       generateTitle: ({ doc }) => (doc?.title ? `${doc.title} — Altech` : 'Altech'),
       generateDescription: ({ doc }) => doc?.excerpt || '',
     }),
-    ...(useS3
-      ? [
-          s3Storage({
-            collections: { media: true },
-            bucket: process.env.S3_BUCKET as string,
-            config: {
-              endpoint: process.env.S3_ENDPOINT,
-              region: process.env.S3_REGION || 'us-east-1',
-              forcePathStyle: true,
-              credentials: {
-                accessKeyId: process.env.S3_ACCESS_KEY_ID as string,
-                secretAccessKey: process.env.S3_SECRET_ACCESS_KEY as string,
-              },
-            },
-          }),
-        ]
-      : []),
+    // Always registered so the admin importMap stays consistent between local
+    // and production; `enabled` (not conditional inclusion) toggles the actual
+    // S3 behavior, falling back to disk storage when no S3 env vars are set.
+    s3Storage({
+      enabled: useS3,
+      collections: { media: true },
+      bucket: process.env.S3_BUCKET || '',
+      config: {
+        endpoint: process.env.S3_ENDPOINT,
+        region: process.env.S3_REGION || 'us-east-1',
+        forcePathStyle: true,
+        credentials: {
+          accessKeyId: process.env.S3_ACCESS_KEY_ID || '',
+          secretAccessKey: process.env.S3_SECRET_ACCESS_KEY || '',
+        },
+      },
+    }),
   ],
 })
