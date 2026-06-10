@@ -1,35 +1,40 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { Logo } from '@/components/ui/Logo'
-import { certBadges, copyright, footerColumns, legalLinks } from '@/content/site'
+import { certBadges } from '@/content/site'
+import { getDictionary, localizeHref, type Locale } from '@/content/i18n'
 
 const linkClass = 'text-[clamp(16px,1.1vw,20px)] text-muted transition-colors hover:text-white'
 const headingClass = 'text-[clamp(18px,1.2vw,24px)] font-extrabold text-white'
 
 interface FooterProps {
+  locale: Locale
   contact: { address: string; email: string; phone: string }
   social: Array<{ label: string; href: string; icon: string }>
 }
 
-export function Footer({ contact, social }: FooterProps) {
+export function Footer({ locale, contact, social }: FooterProps) {
+  const t = getDictionary(locale)
+  const loc = (href: string) => localizeHref(href, locale)
+
   return (
     <footer className="bg-ink text-white">
       <div className="mx-auto max-w-[1680px] px-5 py-16 sm:px-8 lg:px-12 xl:px-[109px] lg:py-24">
-        <Logo variant="light" />
+        <Logo variant="light" locale={locale} />
 
         <div className="mt-14 grid grid-cols-2 gap-x-8 gap-y-12 md:grid-cols-3 lg:grid-cols-5">
           {/* Contact block */}
           <div className="flex flex-col gap-8">
             <div>
-              <h3 className={headingClass}>Dirección</h3>
+              <h3 className={headingClass}>{t.footer.direccion}</h3>
               <p className="mt-3 max-w-[280px] text-[clamp(16px,1.1vw,20px)] text-muted">{contact.address}</p>
             </div>
             <div>
-              <h3 className={headingClass}>Teléfono</h3>
+              <h3 className={headingClass}>{t.footer.telefono}</h3>
               <p className="mt-3 text-[clamp(16px,1.1vw,20px)] text-muted">{contact.phone}</p>
             </div>
             <div>
-              <h3 className={headingClass}>Email</h3>
+              <h3 className={headingClass}>{t.footer.email}</h3>
               <a href={`mailto:${contact.email}`} className={`mt-3 block ${linkClass}`}>
                 {contact.email}
               </a>
@@ -37,13 +42,13 @@ export function Footer({ contact, social }: FooterProps) {
           </div>
 
           {/* Link columns */}
-          {Object.values(footerColumns).map((col) => (
+          {t.footer.columns.map((col) => (
             <div key={col.title}>
               <h3 className={headingClass}>{col.title}</h3>
               <ul className="mt-5 flex flex-col gap-4">
                 {col.links.map((l) => (
                   <li key={l.href}>
-                    <Link href={l.href} className={linkClass}>
+                    <Link href={loc(l.href)} className={linkClass}>
                       {l.label}
                     </Link>
                   </li>
@@ -54,7 +59,7 @@ export function Footer({ contact, social }: FooterProps) {
 
           {/* Social */}
           <div>
-            <h3 className={headingClass}>Redes sociales</h3>
+            <h3 className={headingClass}>{t.footer.redes}</h3>
             <div className="mt-5 flex items-center gap-4">
               {social.map((s) => (
                 <a
@@ -77,11 +82,11 @@ export function Footer({ contact, social }: FooterProps) {
 
         <div className="flex flex-col gap-8 lg:flex-row lg:items-center lg:justify-between">
           <div className="flex flex-col gap-3">
-            <p className="text-[clamp(14px,1vw,18px)] text-muted">{copyright}</p>
+            <p className="text-[clamp(14px,1vw,18px)] text-muted">{t.footer.copyright}</p>
             <ul className="flex flex-wrap gap-x-6 gap-y-2">
-              {legalLinks.map((l) => (
+              {t.footer.legal.map((l) => (
                 <li key={l.href}>
-                  <Link href={l.href} className="text-[clamp(13px,0.95vw,18px)] text-muted hover:text-white">
+                  <Link href={loc(l.href)} className="text-[clamp(13px,0.95vw,18px)] text-muted hover:text-white">
                     {l.label}
                   </Link>
                 </li>

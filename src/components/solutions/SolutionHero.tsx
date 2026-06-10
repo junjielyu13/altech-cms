@@ -3,10 +3,12 @@ import Link from 'next/link'
 import { Container } from '@/components/ui/Container'
 import { Download } from '@/components/ui/icons'
 import type { SolutionDetail } from '@/content/solutions'
+import { getDictionary, type Locale } from '@/content/i18n'
 
 /** Top hero for a solution detail page: a photo washed with the brand-red
  *  gradient, an eyebrow label, the headline + lead, and a "Descargar PDF" CTA. */
-export function SolutionHero({ detail }: { detail: SolutionDetail }) {
+export function SolutionHero({ detail, locale }: { detail: SolutionDetail; locale: Locale }) {
+  const descargarPdf = getDictionary(locale).ui.descargarPdf
   return (
     <section className="relative overflow-hidden">
       <div className="absolute inset-0 -z-10">
@@ -38,7 +40,7 @@ export function SolutionHero({ detail }: { detail: SolutionDetail }) {
           href={detail.pdfHref ?? '#'}
           className="flex h-[55px] w-fit shrink-0 items-center justify-center gap-3 rounded-[48px] bg-white px-8 text-[15px] font-extrabold text-ink transition-colors hover:bg-white/90"
         >
-          Descargar PDF
+          {descargarPdf}
           <Download className="h-4 w-4" />
         </Link>
       </Container>

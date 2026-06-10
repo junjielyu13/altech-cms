@@ -3,25 +3,27 @@ import Link from 'next/link'
 import { Container } from '@/components/ui/Container'
 import { ChevronRight } from '@/components/ui/icons'
 import { type NewsCardContent } from '@/content/home'
+import { getDictionary, localizeHref, type Locale } from '@/content/i18n'
 
-export function News({ news }: { news: NewsCardContent[] }) {
+export function News({ locale, news }: { locale: Locale; news: NewsCardContent[] }) {
+  const t = getDictionary(locale)
   return (
     <section className="bg-surface pb-20 lg:pb-28">
       <Container>
         <div className="flex flex-wrap items-center justify-between gap-6">
-          <h2 className="text-[clamp(36px,5vw,64px)] font-extrabold text-ink">Noticias</h2>
+          <h2 className="text-[clamp(36px,5vw,64px)] font-extrabold text-ink">{t.ui.newsTitle}</h2>
           <Link
-            href="/noticias"
+            href={localizeHref('/noticias', locale)}
             className="flex h-[55px] items-center gap-3 rounded-[48px] bg-chip px-7 text-[clamp(16px,1.4vw,24px)] font-extrabold text-ink transition-colors hover:bg-line"
           >
-            Ver más noticias
+            {t.ui.newsCta}
             <ChevronRight className="h-[11px] w-[6px]" />
           </Link>
         </div>
 
         <div className="mt-12 grid grid-cols-1 gap-6 sm:grid-cols-2 xl:grid-cols-4">
           {news.map((item) => (
-            <NewsCard key={item.href} item={item} />
+            <NewsCard key={item.href} item={item} href={localizeHref(item.href, locale)} />
           ))}
         </div>
       </Container>
@@ -29,10 +31,10 @@ export function News({ news }: { news: NewsCardContent[] }) {
   )
 }
 
-function NewsCard({ item }: { item: NewsCardContent }) {
+function NewsCard({ item, href }: { item: NewsCardContent; href: string }) {
   return (
     <Link
-      href={item.href}
+      href={href}
       className="group flex flex-col overflow-hidden rounded-[30px] bg-white shadow-[var(--shadow-card)] transition-transform duration-200 hover:-translate-y-1"
     >
       <div className="relative h-[230px] w-full overflow-hidden">

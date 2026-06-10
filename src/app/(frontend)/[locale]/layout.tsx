@@ -2,7 +2,8 @@ import React from 'react'
 import type { Metadata } from 'next'
 import { Poppins } from 'next/font/google'
 import { siteUrl } from '@/lib/siteConfig'
-import './globals.css'
+import { htmlLang, isLocale } from '@/content/i18n'
+import '../globals.css'
 
 // Codec Pro stand-in until the licensed font files are supplied.
 const codec = Poppins({
@@ -35,10 +36,6 @@ export const metadata: Metadata = {
     'Barcelona',
   ],
   authors: [{ name: 'Altech Solutions and Consulting S.L.' }],
-  alternates: {
-    canonical: '/',
-    languages: { es: '/', en: '/', ca: '/' },
-  },
   openGraph: {
     type: 'website',
     siteName: 'Altech',
@@ -61,9 +58,17 @@ export const metadata: Metadata = {
   },
 }
 
-export default function FrontendLayout({ children }: { children: React.ReactNode }) {
+export default async function FrontendLayout({
+  children,
+  params,
+}: {
+  children: React.ReactNode
+  params: Promise<{ locale: string }>
+}) {
+  const { locale } = await params
+  const lang = isLocale(locale) ? htmlLang[locale] : htmlLang.es
   return (
-    <html lang="es" className={codec.variable}>
+    <html lang={lang} className={codec.variable}>
       <body>{children}</body>
     </html>
   )

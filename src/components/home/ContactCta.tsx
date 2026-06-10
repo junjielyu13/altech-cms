@@ -2,11 +2,13 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { Container } from '@/components/ui/Container'
 import { ChevronRight } from '@/components/ui/icons'
+import { localizeHref, type Locale } from '@/content/i18n'
 interface ContactCtaProps {
+  locale: Locale
   cta: { title: string; subtitle: string; buttonLabel: string; href: string }
 }
 
-export function ContactCta({ cta: contactCta }: ContactCtaProps) {
+export function ContactCta({ locale, cta: contactCta }: ContactCtaProps) {
   return (
     <section className="bg-surface pb-20 lg:pb-28">
       <Container>
@@ -19,7 +21,7 @@ export function ContactCta({ cta: contactCta }: ContactCtaProps) {
             {contactCta.subtitle}
           </p>
           <Link
-            href={contactCta.href}
+            href={localizeHref(contactCta.href, locale)}
             className="mx-auto mt-9 flex h-[55px] w-[200px] items-center justify-center gap-3 rounded-[48px] bg-brand text-[clamp(18px,1.4vw,24px)] font-extrabold text-white transition-colors hover:bg-brand-dark"
           >
             {contactCta.buttonLabel}

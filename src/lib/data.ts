@@ -11,7 +11,8 @@ import type {
   StatContent,
 } from '@/content/home'
 
-export type Locale = 'es' | 'en' | 'ca'
+export type { Locale } from '@/content/i18n'
+import type { Locale } from '@/content/i18n'
 
 // Decorative, design-owned assets that are NOT editable content: each solution
 // area keeps a fixed icon, and the "Emergencias" card is the highlighted one.

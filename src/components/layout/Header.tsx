@@ -1,19 +1,40 @@
 import Link from 'next/link'
 import { Logo } from '@/components/ui/Logo'
+import { LocaleSwitcher } from '@/components/layout/LocaleSwitcher'
 import { ChevronDown, ChevronRight } from '@/components/ui/icons'
-import { mainNav } from '@/content/site'
+import { getDictionary, localizeHref, type Locale } from '@/content/i18n'
 import { cn } from '@/lib/cn'
 
 /** Fixed top navigation. The "Soluciones" / "Sobre nosotros" items reveal a
- *  dropdown on hover/focus (pure CSS via `group`). */
-export function Header() {
+ *  dropdown on hover/focus (pure CSS via `group`). Locale-aware: labels come
+ *  from the dictionary and links are prefixed for en/ca. */
+export function Header({ locale }: { locale: Locale }) {
+  const t = getDictionary(locale)
+  const loc = (href: string) => localizeHref(href, locale)
+
+  const nav = [
+    {
+      label: t.nav.soluciones,
+      href: loc('/soluciones'),
+      children: t.solutionsMenu.map((s) => ({ ...s, href: loc(s.href) })),
+    },
+    {
+      label: t.nav.sobreNosotros,
+      href: loc('/sobre-nosotros'),
+      children: t.aboutMenu.map((a) => ({ ...a, href: loc(a.href) })),
+    },
+    { label: t.nav.noticias, href: loc('/noticias') },
+    { label: t.nav.clientes, href: loc('/clientes') },
+    { label: t.nav.trabaja, href: loc('/trabaja-con-nosotros') },
+  ]
+
   return (
     <header className="fixed inset-x-0 top-0 z-50 bg-white/95 shadow-[var(--shadow-nav)] backdrop-blur">
       <div className="mx-auto flex h-[88px] max-w-[1680px] items-center justify-between gap-6 px-5 sm:px-8 lg:px-12 xl:px-[97px]">
-        <Logo variant="dark" />
+        <Logo variant="dark" locale={locale} />
 
         <nav className="hidden items-center gap-1 lg:flex">
-          {mainNav.map((item) =>
+          {nav.map((item) =>
             item.children ? (
               <div key={item.label} className="group relative">
                 <Link
@@ -38,15 +59,12 @@ export function Header() {
         </nav>
 
         <div className="flex items-center gap-5">
-          <button className="hidden items-center gap-1.5 text-[15px] font-extrabold text-ink sm:flex" type="button">
-            ES
-            <ChevronDown className="h-[5px] w-[10px]" />
-          </button>
+          <LocaleSwitcher locale={locale} />
           <Link
-            href="/contacto"
+            href={loc('/contacto')}
             className="flex h-10 items-center rounded-[28px] bg-brand px-6 text-[15px] font-extrabold text-white transition-colors hover:bg-brand-dark"
           >
-            Contacto
+            {t.nav.contacto}
           </Link>
         </div>
       </div>

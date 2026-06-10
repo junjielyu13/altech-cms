@@ -2,14 +2,17 @@ import Link from 'next/link'
 import { Container } from '@/components/ui/Container'
 import { ChevronRight } from '@/components/ui/icons'
 import { type SolutionCardContent } from '@/content/home'
+import { getDictionary, localizeHref, type Locale } from '@/content/i18n'
 import { cn } from '@/lib/cn'
 
 interface SolutionsProps {
+  locale: Locale
   intro: { eyebrow: string; title: string; subtitle: string }
   solutions: SolutionCardContent[]
 }
 
-export function Solutions({ intro, solutions }: SolutionsProps) {
+export function Solutions({ locale, intro, solutions }: SolutionsProps) {
+  const verMas = getDictionary(locale).ui.verMas
   return (
     <section className="bg-surface py-20 lg:py-28">
       <Container>
@@ -27,7 +30,7 @@ export function Solutions({ intro, solutions }: SolutionsProps) {
 
         <div className="mt-16 grid grid-cols-1 gap-6 sm:grid-cols-2 xl:grid-cols-4">
           {solutions.map((s) => (
-            <SolutionCard key={s.area} solution={s} />
+            <SolutionCard key={s.area} solution={s} verMas={verMas} href={localizeHref(s.href, locale)} />
           ))}
         </div>
       </Container>
@@ -35,11 +38,11 @@ export function Solutions({ intro, solutions }: SolutionsProps) {
   )
 }
 
-function SolutionCard({ solution }: { solution: SolutionCardContent }) {
+function SolutionCard({ solution, verMas, href }: { solution: SolutionCardContent; verMas: string; href: string }) {
   const { featured } = solution
   return (
     <Link
-      href={solution.href}
+      href={href}
       className={cn(
         'group flex min-h-[435px] flex-col gap-8 rounded-[30px] p-[45px] py-[58px] transition-transform duration-200 hover:-translate-y-1',
         featured ? 'bg-brand text-white' : 'border border-line bg-card text-ink',
@@ -69,7 +72,7 @@ function SolutionCard({ solution }: { solution: SolutionCardContent }) {
         {solution.description}
       </p>
       <span className="mt-auto flex items-center gap-2 text-[clamp(16px,1.4vw,20px)] font-extrabold tracking-[0.6px]">
-        Ver más
+        {verMas}
         <ChevronRight className="h-[13px] w-[8px] transition-transform group-hover:translate-x-1" />
       </span>
     </Link>

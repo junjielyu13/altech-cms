@@ -2,12 +2,14 @@ import Image from 'next/image'
 import { Container } from '@/components/ui/Container'
 import { Check } from '@/components/ui/icons'
 import type { SolutionFeatureSection as SectionContent } from '@/content/solutions'
+import { getDictionary, type Locale } from '@/content/i18n'
 import { cn } from '@/lib/cn'
 
 /** Alternating photo + content block used down a solution detail page:
  *  heading, lead, capability bullets and a "Ventajas" benefit list. */
-export function SolutionFeatureSection({ section }: { section: SectionContent }) {
+export function SolutionFeatureSection({ section, locale }: { section: SectionContent; locale: Locale }) {
   const imageLeft = section.imageSide === 'left'
+  const ventajas = getDictionary(locale).ui.ventajas
 
   return (
     <section className="bg-white py-14 lg:py-20">
@@ -45,7 +47,7 @@ export function SolutionFeatureSection({ section }: { section: SectionContent })
             </ul>
 
             <p className="mt-10 text-[13px] font-bold uppercase tracking-[0.18em] text-brand">
-              Ventajas
+              {ventajas}
             </p>
             <ul className="mt-5 flex flex-col gap-3">
               {section.advantages.map((a) => (
