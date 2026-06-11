@@ -48,8 +48,14 @@ Default seeded admin: `admin@altech.es` / `Altech2026!`
 
 - **Supabase (recommended)** — point `DATABASE_URI` at the Supabase **session pooler** (port `5432`).
   Migrations/seeding need session mode; the transaction pooler (6543) is for serverless runtime only.
-- **Local Docker Postgres** — `docker run -d --name altech-pg -e POSTGRES_PASSWORD=postgres -e POSTGRES_DB=altech -p 5432:5432 postgres:16`
-  then `DATABASE_URI=postgres://postgres:postgres@localhost:5432/altech`.
+- **Local Docker Postgres (offline dev)** — a [`docker-compose.yml`](./docker-compose.yml) is provided:
+
+  ```bash
+  docker compose up -d      # start local Postgres on localhost:5432 (volume-backed)
+  ```
+  then set `DATABASE_URI=postgres://postgres:postgres@localhost:5432/altech` in `.env` and run
+  `npm run seed`. Stop with `docker compose down` (data persists in the `altech-pgdata` volume;
+  add `-v` to wipe it). Local-only credentials (`postgres`/`postgres`) match `.env.example`.
 
 ### Environment variables
 

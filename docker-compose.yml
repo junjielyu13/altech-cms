@@ -1,0 +1,37 @@
+# Local Postgres for offline / local-first development.
+#
+# Production runs on Supabase (see .env / .env.example). This container is only
+# needed when you want to develop without a network connection to Supabase.
+#
+# Usage:
+#   docker compose up -d        # start local Postgres on localhost:5432
+#   docker compose down         # stop (data is preserved in the named volume)
+#   docker compose down -v      # stop AND wipe the database volume
+#
+# Then point .env at it:
+#   DATABASE_URI=postgres://postgres:postgres@localhost:5432/altech
+# and run `npm run seed` to create the schema + sample data.
+#
+# Credentials below are local-only defaults (not secrets) and match .env.example.
+
+services:
+  postgres:
+    image: postgres:16
+    container_name: altech-pg
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: altech
+    ports:
+      - "5432:5432"
+    volumes:
+      - altech-pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d altech"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  altech-pgdata:
